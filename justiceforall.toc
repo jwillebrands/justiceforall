@@ -1,0 +1,6 @@
+## Interface: 20400
+## Title: Justice for all!
+## Notes: No more forgetting of badges, ever!
+## Author: Gotai
+## Version: Beta 1
+justiceforall.lua
