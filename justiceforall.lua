@@ -171,7 +171,7 @@ end
 
 local function StopBadgeWarning()
 	UIFrameFlashRemoveFrame(LowHealthFrame)
-	LowHealthFrame:SetAlpha(0)
+	LowHealthFrame:Hide()
 end
 
 --Create a frame for monitoring events.
@@ -213,11 +213,3 @@ local function OnEvent(event, ...)
 	end
 end
 frame:SetScript("OnEvent", function(frame, event, ...) OnEvent(event, ...) end)
-
-local function StopFlash()
-	LowHealthFrame:SetAlpha(0)
-end
-
---Register slash command.
-SlashCmdList["JUSTICEFORALL"] = StopFlash
-SLASH_GIT1 = "/badge"
