@@ -2,5 +2,5 @@
 ## Title: Justice for all!
 ## Notes: No more forgetting of badges, ever!
 ## Author: Gotai
-## Version: Beta 1
+## Version: 1.0
 justiceforall.lua

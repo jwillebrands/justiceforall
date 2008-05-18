@@ -162,22 +162,38 @@ local BadgeTable = {
 --Warning functions.
 local function StartBadgeWarning()
 	--Do a raid warning message with sound.
-	RaidNotice_AddMessage(RaidWarningFrame, "Boss died, pick up your badge!", ChatTypeInfo["RAID_WARNING"])
+	RaidNotice_AddMessage(RaidWarningFrame, "Boss died! Pick up your badge!", ChatTypeInfo["RAID_WARNING"])
 	PlaySound("RaidWarning")
 	
 	--Initalise annoying screen flashing.
-	UIFrameFlash(LowHealthFrame, 2, 2, 60, false)
+	UIFrameFlash(JusticeForAll, 2, 2, 240, false)
 end
 
 local function StopBadgeWarning()
-	UIFrameFlashRemoveFrame(LowHealthFrame)
+	UIFrameFlashRemoveFrame(JusticeForAll)
 	LowHealthFrame:Hide()
 end
 
 --Create a frame for monitoring events.
-local frame = CreateFrame("Frame",UIParent)
+local frame = CreateFrame("Frame","JusticeForAll",UIParent)
+frame:SetWidth(64)
+frame:SetHeight(64)
+frame:EnableMouse()
+frame:SetMovable()
+frame:RegisterForDrag("LeftButton")
+frame:SetScript("OnDragStart", function(self) self:StartMoving() end)
+frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+frame:SetScript("OnMouseDown", function(self,button) if button == "RightButton" then self:Hide() SetDesaturation(JFATexture, false) end end)
+frame:SetUserPlaced(true)
+frame:Hide()
+
 --Register for zone changes so we know when to start monitoring combatlog.
 frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+local icon = frame:CreateTexture("JFATexture","ARTWORK")
+icon:SetAllPoints()
+icon:SetTexture("Interface\\Icons\\Spell_Holy_ChampionsBond")
 
 --Set OnEvent handler.
 local function OnEvent(event, ...)
@@ -210,6 +226,20 @@ local function OnEvent(event, ...)
 		elseif (not InInstance and frame:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED")) then --Unregister CLEU when leaving instance.
 			return frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
+	elseif (event == "PLAYER_ENTERING_WORLD") then
+		if not frame:GetPoint() then
+			frame:SetPoint("CENTER")
+			--frame:Hide()
+		end
 	end
 end
 frame:SetScript("OnEvent", function(frame, event, ...) OnEvent(event, ...) end)
+
+function OnSlash(msg)
+	frame:Show()
+	SetDesaturation(JFATexture, true)
+end
+
+SlashCmdList["JUSTICEFORALL"] = OnSlash
+SLASH_JUSTICEFORALL1 = "/badge"
+SLASH_JUSTICEFORALL2 = "/jfa"

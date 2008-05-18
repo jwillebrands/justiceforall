@@ -1,3 +1,8 @@
-This addon will help you picking up Badges of Justice.
+This addon will remind you to pick up Badges of Justice.
 
-If for some reason the LowHealthFrame doesn't fade, type /badge and drop me a line in-game or on IRC.
+Type /badge or /jfa to show the frame to reposition it. Right click to hide it again.
+
+**Changelog
+Beta -> 1.0
+* Changed to own frame instead of using LowHealthFrame. LHF was annoying and sometimes not as noticeable as I want it to be.
+* Should be free of bugs now.
