@@ -171,7 +171,7 @@ end
 
 local function StopBadgeWarning()
 	UIFrameFlashRemoveFrame(JusticeForAll)
-	LowHealthFrame:Hide()
+	JusticeForAll:Hide()
 end
 
 --Create a frame for monitoring events.
@@ -229,7 +229,6 @@ local function OnEvent(event, ...)
 	elseif (event == "PLAYER_ENTERING_WORLD") then
 		if not frame:GetPoint() then
 			frame:SetPoint("CENTER")
-			--frame:Hide()
 		end
 	end
 end
